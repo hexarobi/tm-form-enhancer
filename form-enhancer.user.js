@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Form Enhancer
 // @namespace    http://tampermonkey.net/
-// @version      0.4
+// @version      0.5
 // @description  Adds address autocomplete and email verification to forms
 // @author       Tyler Chamberlain
 // @match        https://act.betofortexas.com/*
@@ -172,3 +172,21 @@ $('input:checkbox').mouseover(function(){
 });
 document.body.onmousedown = function(){mouseDown = 1;}
 document.body.onmouseup = function(){mouseDown = 0;}
+
+// Clean names
+$('#id_first_name').change(function () {
+    $('#id_first_name').val(
+        cleanNameInput($('#id_first_name').val())
+    );
+});
+$('#id_last_name').change(function () {
+    $('#id_last_name').val(
+        cleanNameInput($('#id_last_name').val())
+    );
+});
+$('body').append('<style>#id_first_name, #id_last_name { text-transform:capitalize; }</style>');
+
+function cleanNameInput(string) {
+    string = string.trim();
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
