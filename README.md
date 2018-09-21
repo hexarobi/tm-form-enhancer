@@ -8,5 +8,5 @@ This user script adds email address validation and address auto-complete to many
 
 2. Install the [Tampermonkey extension](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en).
 
-3. Install the Form Enhancer script by clicking [here](https://github.com/hexarobi/tm-form-enhancer/raw/master/form-enhancer.user.js)
+3. Install the [Form Enhancer script](https://github.com/hexarobi/tm-form-enhancer/raw/master/form-enhancer.user.js)
 
