@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Form Enhancer
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  Adds address autocomplete and email verification to forms
 // @author       Tyler Chamberlain
 // @match        */*
@@ -71,14 +71,15 @@ function addGmapsResultsHiddenFields() {
 }
 
 function addEmailVerificationIcons() {
-    var html = '<div style="float:right;margin-top:0.4em;"><img class="js-email-icon-valid email-icon" src="http://hexarobi.com/person-search/img/icons8-ok-48.png" alt="Valid">'
+    var html = '<div style="position: absolute;float:right;width: 100%;"><div style="position:absolute;right:0.4em;top:0.4em;">'
+        + '<img class="js-email-icon-valid email-icon" src="http://hexarobi.com/person-search/img/icons8-ok-48.png" alt="Valid">'
         + '<img class="js-email-icon-invalid email-icon" src="http://hexarobi.com/person-search/img/icons8-cancel-48.png" alt="Invalid">'
         + '<img class="js-email-icon-unknown email-icon" src="http://hexarobi.com/person-search/img/icons8-help-48.png" alt="Unknown"">'
-        + '<img class="js-email-icon-loading email-icon" src="http://hexarobi.com/person-search/img/loading.gif" alt="Loading""><div>'
+        + '<img class="js-email-icon-loading email-icon" src="http://hexarobi.com/person-search/img/loading.gif" alt="Loading"">'
+        + '<div></div>'
         + '<style>.email-icon { width:2em; height:2em; display:none; }</style>'
     ;
-    $('#id_email').after(html);
-    $('#id_email').css('width', '94%');
+    $('#id_email').before(html);
 
     $('#id_email').change(function () {
         return validateEmailAddress($('#id_email').val());
