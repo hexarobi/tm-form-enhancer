@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Form Enhancer
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.4
 // @description  Adds address autocomplete and email verification to forms
 // @author       Tyler Chamberlain
-// @match        */*
+// @match        https://act.betofortexas.com/*
 // @grant        unsafeWindow
 // @require      https://code.jquery.com/jquery-1.8.3.min.js
 // @require      https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js
@@ -68,7 +68,7 @@ function addGmapsResultsHiddenFields() {
         + '<input type="hidden" name="administrative_area_level_1" id="administrative_area_level_1" />'
         + '<input type="hidden" name="postal_code" id="postal_code" />'
         + '<input type="hidden" name="country" id="country" />';
-    $('.ak-page-footer').after(html);
+    $('body').append(html);
 }
 
 function addEmailVerificationIcons() {
@@ -162,16 +162,13 @@ function fillInAddress() {
 
 // Handle drag-over to check mailboxes
 var mouseDown = 0;
-
 function checkboxMouseover(box) {
     if (mouseDown) {
         box.checked = 1-box.checked;
     }
 }
-
 $('input:checkbox').mouseover(function(){
     checkboxMouseover(this);
 });
-
-document.body.onmousedown = function(){++mouseDown;}
-document.body.onmouseup = function(){--mouseDown;}
+document.body.onmousedown = function(){mouseDown = 1;}
+document.body.onmouseup = function(){mouseDown = 0;}
