@@ -8,7 +8,9 @@ This user script adds email address validation and address auto-complete to many
 
 2. Install the Tampermonkey extension for either [Chrome](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en) or [FireFox](https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/). This add-on allows for customer userscripts to be installed.
 
-3. Install the [Form Enhancer userscript](https://github.com/hexarobi/tm-form-enhancer/raw/master/form-enhancer.user.js) by opening the link and clicking the "Install" button on the page.
+3. Install the [Form Enhancer userscript](https://github.com/hexarobi/tm-form-enhancer/raw/master/form-enhancer.user.js) by opening the link and clicking the "Install" button on the page. This enabled email validation, address autocomplete, and name auto-capitalization.
+
+4. Install the [QuickSearchBar userscript](https://github.com/hexarobi/tm-form-enhancer/raw/master/tm-quicksearch-bar.user.js) the same way as before. This enables a QuickSearch bar on the right side of the form for looking up info by name/phone/address.
 
 That's it! Go refresh your forms and you should notice new features. You can disable/reenable the script under the Tampermonkey menu.
 
