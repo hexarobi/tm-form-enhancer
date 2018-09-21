@@ -1,12 +1,13 @@
 // ==UserScript==
 // @name         Form Enhancer
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  Adds address autocomplete and email verification to forms
 // @author       Tyler Chamberlain
 // @match        */*
 // @grant        unsafeWindow
 // @require      https://code.jquery.com/jquery-1.8.3.min.js
+// @require      https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js
 // ==/UserScript==
 
 var autocomplete;
@@ -24,6 +25,9 @@ $(document).ready((function(){
     addGmapsResultsHiddenFields();
     addEmailVerificationIcons();
 
+    addScriptToPage("https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js");
+    $('input').selectable();
+
     unsafeWindow.gMapsCallback = function(){
         $(window).trigger('gMapsLoaded');
     }
@@ -39,10 +43,7 @@ $(document).ready((function(){
         preventEnterKeyOnAutocompleteFromSubmittingForm();
     }
     function loadGoogleMaps(){
-        var script_tag = document.createElement('script');
-        script_tag.setAttribute("type","text/javascript");
-        script_tag.setAttribute("src","https://maps.google.com/maps/api/js?key=AIzaSyCTvqo_E9I-pNzIbyY32widD4HboRyQnik&libraries=places&callback=gMapsCallback");
-        (document.getElementsByTagName("head")[0] || document.documentElement).appendChild(script_tag);
+        addScriptToPage("https://maps.google.com/maps/api/js?key=AIzaSyCTvqo_E9I-pNzIbyY32widD4HboRyQnik&libraries=places&callback=gMapsCallback");
     }
     $(window).bind('gMapsLoaded', initialize);
     loadGoogleMaps();
@@ -119,6 +120,13 @@ function preventEnterKeyOnAutocompleteFromSubmittingForm() {
     });
 }
 
+function addScriptToPage(url) {
+    var script_tag = document.createElement('script');
+    script_tag.setAttribute("type","text/javascript");
+    script_tag.setAttribute("src",url);
+    (document.getElementsByTagName("head")[0] || document.documentElement).appendChild(script_tag);
+}
+
 function fillInAddress() {
     // Get the place details from the autocomplete object.
     var place = autocomplete.getPlace();
@@ -151,3 +159,19 @@ function fillInAddress() {
     $("label[for='id_state']").addClass('has-content');
     $("label[for='id_zip']").addClass('has-content');
 }
+
+// Handle drag-over to check mailboxes
+var mouseDown = 0;
+
+function checkboxMouseover(box) {
+    if (mouseDown) {
+        box.checked = 1-box.checked;
+    }
+}
+
+$('input:checkbox').mouseover(function(){
+    checkboxMouseover(this);
+});
+
+document.body.onmousedown = function(){++mouseDown;}
+document.body.onmouseup = function(){--mouseDown;}
