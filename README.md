@@ -10,9 +10,7 @@ This user script adds email address validation and address auto-complete to many
 
 3. Install the [Form Enhancer userscript](https://github.com/hexarobi/tm-form-enhancer/raw/master/form-enhancer.user.js) by opening the link and clicking the "Install" button on the page. This will enable email validation, address autocomplete, and name auto-capitalization.
 
-<div style="text-align:center;">
-  <img src="https://i.imgur.com/Pm8xP9Y.png" />
-</div>
+<img src="https://i.imgur.com/Pm8xP9Y.png" />
 
 4. Install the [QuickSearchBar userscript](https://github.com/hexarobi/tm-form-enhancer/raw/master/tm-quicksearch-bar.user.js) the same way as before. This enables a QuickSearch bar on the right side of the form for looking up info by name/phone/address.
 
