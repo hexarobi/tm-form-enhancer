@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         QuickSearch Bar
+// @name         Quick Search Bar
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  Adds quicksearch bar
 // @author       Tyler Chamberlain
 // @match        https://act.betofortexas.com/signup/*
@@ -11,25 +11,22 @@
 // ==/UserScript==
 
 $(document).ready((function(){
-
-    addBootstrapStyles();
-    addQuickSearBar();
-
+    addQuickSearchBar();
 })());
 
-function addQuickSearBar() {
+function addQuickSearchBar() {
     var baseElement = $('body');
     var html = '<div id="quicksearch" style="text-align: center; padding-bottom:0.5em;">\n' +
-        '                Quick Links<br/>\n' +
+        '                Quick Search Bar<br/>\n' +
         '                <table class="quick-links">\n' +
         '                    <tr>\n' +
         '                        <td>\n' +
         '                            <img src="https://hexarobi.com/person-search/img/people_search_now.png" style="width:8em;" />\n' +
         '                        </td>\n' +
         '                        <td>\n' +
-        '                            <a href="#" class="search-psn-name btn btn-default btn-xs">Name</a>\n' +
-        '                            <a href="#" class="search-psn-phone btn btn-default btn-xs">Phone</a>\n' +
-        '                            <a href="#" class="search-psn-address btn btn-default btn-xs">Address</a>\n' +
+        '                            <a href="" class="search-psn-name button">Name</a>\n' +
+        '                            <a href="" class="search-psn-phone button">Phone</a>\n' +
+        '                            <a href="" class="search-psn-address button">Address</a>\n' +
         '                        </td>\n' +
         '                    </tr>\n' +
         '                    <tr>\n' +
@@ -37,9 +34,9 @@ function addQuickSearBar() {
         '                            <img src="https://hexarobi.com/person-search/img/true_people_search.png" style="width:8em;" />\n' +
         '                        </td>\n' +
         '                        <td>\n' +
-        '                            <a href="#" class="search-tps-name btn btn-default btn-xs">Name</a>\n' +
-        '                            <a href="#" class="search-tps-phone btn btn-default btn-xs">Phone</a>\n' +
-        '                            <a href="#" class="search-tps-address btn btn-default btn-xs">Address</a>\n' +
+        '                            <a href="" class="search-tps-name button">Name</a>\n' +
+        '                            <a href="" class="search-tps-phone button">Phone</a>\n' +
+        '                            <a href="" class="search-tps-address button">Address</a>\n' +
         '                        </td>\n' +
         '                    </tr>\n' +
         '                    <tr>\n' +
@@ -47,15 +44,17 @@ function addQuickSearBar() {
         '                            Other\n' +
         '                        </td>\n' +
         '                        <td>\n' +
-        '                            <a href="#" class="search-zip-streets btn btn-default btn-xs">Streets in Zip</a>\n' +
-        '                            <!--<a href="#" class="search-email-validator btn btn-default btn-xs" target="_blank">Email Validator</a>-->\n' +
+        '                            <a href="" class="search-zip-streets button">Streets in Zip</a>\n' +
+        '                            <!--<a href="" class="search-email-validator button" target="_blank">Email Validator</a>-->\n' +
         '                        </td>\n' +
         '                    </tr>\n' +
         '                </table>\n' +
         '                <iframe id="peoplesearch_frame" style="width:100%;height:100%;" src="https://www.peoplesearchnow.com/"></iframe>'
         + '            </div>'
         + '<style>#quicksearch { border:1px solid black; height:100vh; width:30%; position:fixed; right:0; }'
-        + '#quicksearch-main-content { float:left; width:70%; } table.quick-links { margin:0 auto; } table.quick-links tr td { padding:0.1em;}</style>';
+        + '#quicksearch-main-content { float:left; width:70%; } table.quick-links { margin:0 auto; } table.quick-links tr td { padding:0.1em;}'
+        + '.button { font: bold 11px Arial; text-decoration: none; background-color: #EEEEEE; color: #333333; padding: 2px 6px 2px 6px; '
+        + 'border-top: 1px solid #CCCCCC; border-right: 1px solid #333333; border-bottom: 1px solid #333333; border-left: 1px solid #CCCCCC; }</style>';
     baseElement.wrapInner( '<div id="quicksearch-main-content"></div>' );
     baseElement.append(html);
     addQuicksearchLinks();
@@ -87,15 +86,6 @@ function addQuicksearchLinks() {
         return searchMelissaStreetsByZip();
     });
 
-}
-
-function addBootstrapStyles() {
-    var link_tag = document.createElement('link');
-    link_tag.setAttribute("rel", "stylesheet");
-    link_tag.setAttribute("href", "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css");
-    link_tag.setAttribute("integrity","sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u");
-    link_tag.setAttribute("crossorigin","anonymous");
-    (document.getElementsByTagName("head")[0] || document.documentElement).appendChild(link_tag);
 }
 
 function changeSearchFrame(searchUrl) {
@@ -171,6 +161,12 @@ function searchPsnAddress() {
         $('#id_state').val().toLowerCase()
     );
     return changeSearchFrame(addressSearchUrl + addressSearchKey);
+}
+
+function buildPeopleSearchNowUrlAddressKey(streetNumber, streetName, city, state) {
+    var searchKey = streetNumber + '_' + streetName + '_' + city + '_' + state;
+    searchKey = searchKey.replace(" ", "-");
+    return searchKey;
 }
 
 function searchPsnName() {
