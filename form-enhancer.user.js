@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Form Enhancer
 // @namespace    http://tampermonkey.net/
-// @version      0.5
+// @version      0.6
 // @description  Adds address autocomplete and email verification to forms
 // @author       Tyler Chamberlain
 // @match        https://act.betofortexas.com/*
@@ -88,24 +88,30 @@ function addEmailVerificationIcons() {
 }
 
 function validateEmailAddress(emailAddress) {
-    var emailValidationUrl = 'https://api.trumail.io/v2/lookups/json?email=' + emailAddress;
-
     $('.email-icon').hide();
     $('.js-email-icon-loading').show();
-
-    $.get( emailValidationUrl, function( data ) {
-        $('#email-validation-loader').hide();
-        if (data) {
-            if (data.Message == 'No response received from mail server') {
-                $('.email-icon').hide();
-                $('.js-email-icon-unknown').show();
-            } else if (data.deliverable) {
+    $.ajax({
+        type: "GET",
+        url: 'https://api.mailgun.net/v2/address/validate',
+        data: {
+            "address": emailAddress,
+            "api_key": "pubkey-3ffe370c333abe90f519cdea68c94303"
+        },
+        crossDomain: true,
+        dataType: "json",
+        success: function( data ) {
+            $('#email-validation-loader').hide();
+            if (data.is_valid && data.mailbox_verification === "true") {
                 $('.email-icon').hide();
                 $('.js-email-icon-valid').show();
             } else {
                 $('.email-icon').hide();
                 $('.js-email-icon-invalid').show();
             }
+        },
+        error: function() {
+            $('.email-icon').hide();
+            $('.js-email-icon-unknown').show();
         }
     });
 }
