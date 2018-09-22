@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Form Enhancer
 // @namespace    http://tampermonkey.net/
-// @version      0.6
+// @version      0.7
 // @description  Adds address autocomplete and email verification to forms
 // @author       Tyler Chamberlain
 // @match        https://act.betofortexas.com/*
@@ -55,7 +55,7 @@ function addAddressSearchField() {
     $('#ak-fieldbox-address1').before(
         '<div id="ak-fieldbox-address-search" class="ak-err-below">'
         + '<label for="autocomplete" class="ak-is-overlaid" style="cursor: text; pointer-events: none;"></label>'
-        + '<input type="text" name="address_search" id="autocomplete" class="ak-userfield-input" role="presentation" autocomplete="nope"></div>'
+        + '<input type="text" name="address_search" id="autocomplete" class="ak-userfield-input" role="presentation" autocomplete="nope" placeholder="Search for an address"></div>'
     );
 }
 
@@ -165,19 +165,6 @@ function fillInAddress() {
     $("label[for='id_state']").addClass('has-content');
     $("label[for='id_zip']").addClass('has-content');
 }
-
-// Handle drag-over to check mailboxes
-var mouseDown = 0;
-function checkboxMouseover(box) {
-    if (mouseDown) {
-        box.checked = 1-box.checked;
-    }
-}
-$('input:checkbox').mouseover(function(){
-    checkboxMouseover(this);
-});
-document.body.onmousedown = function(){mouseDown = 1;}
-document.body.onmouseup = function(){mouseDown = 0;}
 
 // Clean names
 $('#id_first_name').change(function () {
