@@ -6,7 +6,7 @@ This user script adds email address validation and address auto-complete to many
 
 1. Make sure you are using either [Google Chrome](https://www.google.com/chrome/) or [Mozilla FireFox](https://www.mozilla.org/firefox). Microsoft Internet Explorer or Edge will not work.
 
-2. Install the Tampermonkey extension for either [Chrome](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en) or [FireFox](https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/). This add-on allows for custom userscripts to be installed, which you will do in the next steps.
+2. Install either [Tampermonkey for Chrome](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en) or [Tampermonkey for FireFox](https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/). This add-on allows for custom userscripts to be installed, which you will do in the next steps.
 
 3. Install the [Form Enhancer userscript](https://github.com/hexarobi/tm-form-enhancer/raw/master/form-enhancer.user.js) by opening the link and clicking the "Install" button on the page. This enabled email validation, address autocomplete, and name auto-capitalization.
 
