@@ -16,5 +16,6 @@ This user script adds email address validation and address auto-complete to many
 
 That's it! Go refresh your forms and you should notice new features. You can disable/reenable the script under the Tampermonkey menu.
 
-Example of how to use on a form:
+## Example of how to use an enhanced a form
+
 <img src="https://i.imgur.com/70kVbWg.gif" />
