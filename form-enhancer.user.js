@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Form Enhancer
 // @namespace    http://tampermonkey.net/
-// @version      0.7
+// @version      0.8
 // @description  Adds address autocomplete and email verification to forms
 // @author       Tyler Chamberlain
 // @match        https://act.betofortexas.com/*
@@ -86,10 +86,17 @@ function addEmailVerificationIcons() {
         return validateEmailAddress($('#id_email').val());
     });
 }
-
 function validateEmailAddress(emailAddress) {
+    setEmailStatusIcon('loading');
+    validateEmailAddressWithTrumail(emailAddress);
+}
+
+function setEmailStatusIcon(state) {
     $('.email-icon').hide();
-    $('.js-email-icon-loading').show();
+    $('.js-email-icon-' + state).show();
+}
+
+function validateEmailAddressWithMailgun(emailAddress) {
     $.ajax({
         type: "GET",
         url: 'https://api.mailgun.net/v2/address/validate',
@@ -102,16 +109,30 @@ function validateEmailAddress(emailAddress) {
         success: function( data ) {
             $('#email-validation-loader').hide();
             if (data.is_valid && data.mailbox_verification === "true") {
-                $('.email-icon').hide();
-                $('.js-email-icon-valid').show();
+                setEmailStatusIcon('valid');
             } else {
-                $('.email-icon').hide();
-                $('.js-email-icon-invalid').show();
+                setEmailStatusIcon('invalid');
             }
         },
         error: function() {
-            $('.email-icon').hide();
-            $('.js-email-icon-unknown').show();
+            setEmailStatusIcon('unknown');
+        }
+    });
+}
+
+function validateEmailAddressWithTrumail(emailAddress) {
+    var emailValidationUrl = 'https://api.trumail.io/v2/lookups/json?email=' + emailAddress;
+    $.get( emailValidationUrl, function( data ) {
+        if (data) {
+            if (data.Message == 'No response received from mail server') {
+                //setEmailStatusIcon('unknown');
+                // If free email check failed, fallback to paid
+                validateEmailAddressWithMailgun(emailAddress);
+            } else if (data.deliverable) {
+                setEmailStatusIcon('valid');
+            } else {
+                setEmailStatusIcon('invalid');
+            }
         }
     });
 }
