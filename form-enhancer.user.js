@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Form Enhancer
 // @namespace    http://tampermonkey.net/
-// @version      0.8
+// @version      0.9
 // @description  Adds address autocomplete and email verification to forms
 // @author       Tyler Chamberlain
 // @match        https://act.betofortexas.com/*
@@ -124,10 +124,15 @@ function validateEmailAddressWithTrumail(emailAddress) {
     var emailValidationUrl = 'https://api.trumail.io/v2/lookups/json?email=' + emailAddress;
     $.get( emailValidationUrl, function( data ) {
         if (data) {
-            if (data.Message == 'No response received from mail server') {
+            if (data.Message) {
+                if (data.Message == 'No response received from mail server'
+                    || data.Message == "Rate limit exceeded - If you'd like a higher request volume please contact sales@emailchecker.com"
+                ) {
+                    return validateEmailAddressWithMailgun(emailAddress);
+                }
                 //setEmailStatusIcon('unknown');
                 // If free email check failed, fallback to paid
-                validateEmailAddressWithMailgun(emailAddress);
+                alert(data.Message);
             } else if (data.deliverable) {
                 setEmailStatusIcon('valid');
             } else {
