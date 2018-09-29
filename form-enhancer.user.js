@@ -127,6 +127,7 @@ function validateEmailAddressWithTrumail(emailAddress) {
             if (data.Message) {
                 if (data.Message == 'No response received from mail server'
                     || data.Message == "Rate limit exceeded - If you'd like a higher request volume please contact sales@emailchecker.com"
+                    || data.Message == "Maximum usage reached"
                 ) {
                     return validateEmailAddressWithMailgun(emailAddress);
                 }
