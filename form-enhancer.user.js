@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Form Enhancer
 // @namespace    http://tampermonkey.net/
-// @version      0.9
+// @version      0.10
 // @description  Adds address autocomplete and email verification to forms
 // @author       Tyler Chamberlain
 // @match        https://act.betofortexas.com/*
