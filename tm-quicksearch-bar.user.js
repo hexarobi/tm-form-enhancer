@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quick Search Bar
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  Adds quicksearch bar
 // @author       Tyler Chamberlain
 // @match        https://act.betofortexas.com/signup/*
@@ -16,7 +16,7 @@ $(document).ready((function(){
 
 function addQuickSearchBar() {
     var baseElement = $('body');
-    var html = '<div id="quicksearch" style="text-align: center; padding-bottom:0.5em;">\n' +
+    var html = '<div id="quicksearch" style="text-align: center; padding-bottom:0.5em; top:0; right:0;">\n' +
         '                Quick Search Bar<br/>\n' +
         '                <table class="quick-links">\n' +
         '                    <tr>\n' +
@@ -55,7 +55,7 @@ function addQuickSearchBar() {
         + '#quicksearch-main-content { float:left; width:70%; } table.quick-links { margin:0 auto; } table.quick-links tr td { padding:0.1em;}'
         + '.button { font: bold 11px Arial; text-decoration: none; background-color: #EEEEEE; color: #333333; padding: 2px 6px 2px 6px; '
         + 'border-top: 1px solid #CCCCCC; border-right: 1px solid #333333; border-bottom: 1px solid #333333; border-left: 1px solid #CCCCCC; }</style>';
-    baseElement.wrapInner( '<div id="quicksearch-main-content"></div>' );
+    baseElement.css('padding-right', '20em');
     baseElement.append(html);
     addQuicksearchLinks();
 }
