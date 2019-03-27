@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Form Enhancer
 // @namespace    http://tampermonkey.net/
-// @version      0.11
+// @version      0.12
 // @description  Adds address autocomplete and email verification to forms
 // @author       Tyler Chamberlain
-// @match        https://act.betofortexas.com/*
+// @match        https://act.betoorourke.com/*
 // @grant        unsafeWindow
 // @require      https://code.jquery.com/jquery-1.8.3.min.js
 // @require      https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js
@@ -105,7 +105,7 @@ function validateEmailAddressWithMailgun(emailAddress) {
         url: 'https://api.mailgun.net/v2/address/validate',
         data: {
             "address": emailAddress,
-            "api_key": "pubkey-3ffe370c333abe90f519cdea68c94303"
+            "api_key": "pubkey-82d2fd65da62cfea2a66bc56875678af"
         },
         crossDomain: true,
         dataType: "json",
