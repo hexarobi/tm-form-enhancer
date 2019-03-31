@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Form Enhancer
 // @namespace    http://tampermonkey.net/
-// @version      0.12
+// @version      0.14
 // @description  Adds address autocomplete and email verification to forms
 // @author       Tyler Chamberlain
 // @match        https://act.betoorourke.com/*
@@ -52,9 +52,10 @@ $(document).ready((function(){
 
 // Add the search bar for address autocomplete
 function addAddressSearchField() {
-    $('#ak-fieldbox-address1').before(
-        '<div id="ak-fieldbox-address-search" class="ak-err-below">'
-        + '<label for="autocomplete" class="ak-is-overlaid" style="cursor: text; pointer-events: none;"></label>'
+    addressFieldId = isEventPage() ? '#id_event_address1' : '#id_address1';
+    $(addressFieldId).parent().before(
+        '<div class="ak-err-below" style="user-select: auto;">'
+        + '<label for="autocomplete" style="cursor: text; pointer-events: none;">' + (isEventPage() ? 'Address Search' : '') + '</label>'
         + '<input type="text" name="address_search" id="autocomplete" class="ak-userfield-input" role="presentation" autocomplete="nope" placeholder="Search for an address"></div>'
     );
 }
@@ -71,8 +72,8 @@ function addGmapsResultsHiddenFields() {
     $('body').append(html);
 }
 
-function addEmailVerificationIcons() {
-    var html = '<div style="position: absolute;float:right;width: 100%;"><div style="position:absolute;right:0.4em;top:0.4em;">'
+function addEmailVerificationIcons(emailFieldId) {
+    var html = '<div style="position: absolute;float:right;width:50px;height:50px;right:0"><div style="position:absolute;right:0.4em;top:0.4em;">'
         + '<img class="js-email-icon-valid email-icon" src="http://hexarobi.com/person-search/img/icons8-ok-48.png" alt="Valid">'
         + '<img class="js-email-icon-invalid email-icon" src="http://hexarobi.com/person-search/img/icons8-cancel-48.png" alt="Invalid">'
         + '<img class="js-email-icon-unknown email-icon" src="http://hexarobi.com/person-search/img/icons8-help-48.png" alt="Unknown"">'
@@ -184,16 +185,27 @@ function fillInAddress() {
     }
 
     // copy from hidden fields to visible fields
-    $('#id_address1').val( $('#street_number').val() + ' ' + $('#route').val() );
-    $('#id_city').val( $('#locality').val() );
-    $('#id_state').val( $('#administrative_area_level_1').val() );
-    $('#id_zip').val( $('#postal_code').val() );
+    if (isEventPage()) {
+        $('#id_event_address1').val( $('#street_number').val() + ' ' + $('#route').val() );
+        $('#id_event_city').val( $('#locality').val() );
+        $('#id_event_state').val( $('#administrative_area_level_1').val() );
+        $('#id_event_zip').val( $('#postal_code').val() );
+    } else {
+        $('#id_address1').val( $('#street_number').val() + ' ' + $('#route').val() );
+        $('#id_city').val( $('#locality').val() );
+        $('#id_state').val( $('#administrative_area_level_1').val() );
+        $('#id_zip').val( $('#postal_code').val() );
+    }
 
     // hide placeholders
     $("label[for='id_address1']").addClass('has-content');
     $("label[for='id_city']").addClass('has-content');
     $("label[for='id_state']").addClass('has-content');
     $("label[for='id_zip']").addClass('has-content');
+}
+
+function isEventPage() {
+    return window.location.href.match('^http(s)?:\/\/act.betoorourke.com\/event');
 }
 
 // Clean names
