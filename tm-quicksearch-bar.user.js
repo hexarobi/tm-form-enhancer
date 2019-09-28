@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Quick Search Bar
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.5
 // @description  Adds quicksearch bar
 // @author       Tyler Chamberlain
-// @match        https://act.betofortexas.com/signup/*
+// @match        https://act.betoorourke.com/signup/*
 // @grant        unsafeWindow
 // @require      https://code.jquery.com/jquery-1.8.3.min.js
 // @require      https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js
@@ -16,7 +16,7 @@ $(document).ready((function(){
 
 function addQuickSearchBar() {
     var baseElement = $('body');
-    var html = '<div id="quicksearch" style="text-align: center; padding-bottom:0.5em; top:0; right:0;">\n' +
+    var html = '<div id="quicksearch" style="background-color:white; text-align: center; padding-bottom:0.5em; top:0; right:0;">\n' +
         '                Quick Search Bar<br/>\n' +
         '                <table class="quick-links">\n' +
         '                    <tr>\n' +
